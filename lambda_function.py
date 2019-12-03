@@ -11,10 +11,13 @@ def lambda_handler(event, context):
         
         # convert here
         converted = converter.convert(payload)
+        result = 'Ok'
+        if bool(converted) is False:
+            result = 'Dropped'
 
         out_record = {
             'recordId': record['recordId'],
-            'result': 'Ok',
+            'result': result,
             'data': b64.encode_utf8(json.dumps(converted))
         }
         output.append(out_record)
